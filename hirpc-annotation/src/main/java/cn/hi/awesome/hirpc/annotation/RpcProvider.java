@@ -14,14 +14,18 @@ import java.lang.annotation.Target;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 public @interface RpcProvider {
+    /**
+     * 接口class
+     */
+    Class<?> interfaceClass();
 
     /**
      * 版本号
      */
-    String version() default "";
+    String version() default "1.0.0";
 
     /**
      * 服务分组
      */
-    String group() default "";
+    String group() default "default";
 }
