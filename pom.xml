@@ -11,6 +11,7 @@
     <modules>
         <module>hirpc-annotation</module>
         <module>hirpc-common</module>
+        <module>hirpc-test</module>
     </modules>
 
     <properties>
@@ -18,14 +19,11 @@
         <maven.compiler.target>8</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <spring.version>5.3.23</spring.version>
+        <hirpc.annotation.version>1.0-SNAPSHOT</hirpc.annotation.version>
+        <hirpc.common.version>1.0-SNAPSHOT</hirpc.common.version>
     </properties>
 
     <dependencies>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
     </dependencies>
 
 </project>

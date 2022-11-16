@@ -1,4 +1,4 @@
-package cn.hi.awesome.hirpc;
+package com.hi.awesome.test;
 
 import cn.hi.awesome.hirpc.annotation.RpcConsumer;
 import cn.hi.awesome.hirpc.annotation.RpcProvider;
@@ -7,7 +7,7 @@ import cn.hi.awesome.hirpc.scan.ClassScanner;
 import java.lang.reflect.Field;
 import java.util.List;
 
-public class Consumer {
+public class HelloWorldConsumer {
     @RpcConsumer(version = "1.0.0")
     HelloWorldService helloWorldService;
 
