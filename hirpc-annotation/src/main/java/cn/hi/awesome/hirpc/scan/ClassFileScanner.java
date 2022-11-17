@@ -3,6 +3,7 @@ package cn.hi.awesome.hirpc.scan;
 import cn.hi.awesome.hirpc.common.exception.ScanException;
 import cn.hi.awesome.hirpc.common.parser.ClassParser;
 import cn.hi.awesome.hirpc.common.parser.PackageParser;
+import com.sun.istack.internal.NotNull;
 
 import java.io.File;
 import java.net.URL;
@@ -20,16 +21,13 @@ public class ClassFileScanner implements Scanner<List<String>> {
 
     private final String scanPackage;
 
-    public ClassFileScanner(String scanPackage) {
+    public ClassFileScanner(@NotNull String scanPackage) {
         this.scanPackage = scanPackage;
     }
 
     @Override
     public List<String> scan() {
         List<String> classNameList = new ArrayList<>();
-        if(scanPackage == null) {
-            return classNameList;
-        }
         try {
             String packageDirPath = PackageParser.convertPackageNameToDirPath(scanPackage);
             Enumeration<URL> resources = Thread.currentThread().getContextClassLoader().getResources(packageDirPath);

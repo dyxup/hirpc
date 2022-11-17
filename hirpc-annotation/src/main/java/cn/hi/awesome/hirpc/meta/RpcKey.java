@@ -53,6 +53,10 @@ public class RpcKey<T> {
         return new RpcKey<>(className, version, group, annotationReference);
     }
 
+    public static RpcKey of(String className, String version, String group) {
+        return new RpcKey<>(className, version, group, null);
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

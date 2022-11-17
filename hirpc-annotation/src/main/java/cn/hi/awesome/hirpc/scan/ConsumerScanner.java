@@ -29,7 +29,7 @@ public class ConsumerScanner implements Scanner<Map<RpcKey<RpcConsumer>, Object>
                     if(rpcConsumer == null) {
                         return;
                     }
-                    // TODO: cache proxy instance for rpc
+                    // create real instance in RpcClientInit
                     Object instance = new Object();
                     result.put(RpcKey.of(field.getType().getName(), rpcConsumer.version(), rpcConsumer.group(), rpcConsumer), instance);
                 });

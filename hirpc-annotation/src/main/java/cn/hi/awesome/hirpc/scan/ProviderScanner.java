@@ -31,7 +31,7 @@ public class ProviderScanner implements Scanner<Map<RpcKey<RpcProvider>, Object>
                     continue;
                 }
                 RpcKey<RpcProvider> key = RpcKey.of(rpcProvider.interfaceClass().getName(), rpcProvider.version(), rpcProvider.group(), rpcProvider);
-                // TODO: create instance
+                // create real instance in RpcServerInit
                 Object instance = new Object();
                 result.put(key, instance);
             }
