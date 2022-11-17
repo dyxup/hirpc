@@ -12,6 +12,10 @@
         <module>hirpc-annotation</module>
         <module>hirpc-common</module>
         <module>hirpc-test</module>
+        <module>hirpc-provider</module>
+        <module>hirpc-consumer</module>
+        <module>hirpc-provider</module>
+        <module>hirpc-consumer</module>
     </modules>
 
     <properties>
