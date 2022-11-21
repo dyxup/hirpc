@@ -25,9 +25,22 @@
         <spring.version>5.3.23</spring.version>
         <hirpc.annotation.version>1.0-SNAPSHOT</hirpc.annotation.version>
         <hirpc.common.version>1.0-SNAPSHOT</hirpc.common.version>
+        <netty.version>4.1.84.Final</netty.version>
+        <lombok.version>1.18.24</lombok.version>
+        <logback.version>1.2.11</logback.version>
     </properties>
 
     <dependencies>
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback.version}</version>
+        </dependency>
     </dependencies>
 
 </project>
