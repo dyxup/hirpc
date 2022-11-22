@@ -30,7 +30,7 @@ public class NettyRpcServer implements RpcServer {
                             socketChannel.pipeline()
                                     .addLast(new StringDecoder())
                                     .addLast(new StringEncoder())
-                                    .addLast(new NettyProtocolHandler());
+                                    .addLast(NettyReceiveHandler.getInstance());
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
