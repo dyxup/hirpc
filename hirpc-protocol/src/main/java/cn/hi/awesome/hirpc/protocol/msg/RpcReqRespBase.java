@@ -1,4 +1,4 @@
-package cn.hi.awesome.hirpc.common.protocol.common;
+package cn.hi.awesome.hirpc.protocol.msg;
 
 import java.io.Serializable;
 

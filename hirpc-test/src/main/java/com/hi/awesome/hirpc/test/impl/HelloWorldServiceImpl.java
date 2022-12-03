@@ -1,6 +1,6 @@
-package com.hi.awesome.test.impl;
+package com.hi.awesome.hirpc.test.impl;
 
-import com.hi.awesome.test.HelloWorldService;
+import com.hi.awesome.hirpc.test.HelloWorldService;
 import cn.hi.awesome.hirpc.annotation.RpcProvider;
 
 @RpcProvider(interfaceClass = HelloWorldService.class, version = "1.0.0")

@@ -9,7 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>hirpc-provider</artifactId>
+    <artifactId>hirpc-protocol</artifactId>
 
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
@@ -19,14 +19,14 @@
 
     <dependencies>
         <dependency>
-            <groupId>cn.hi.awesome</groupId>
-            <artifactId>hirpc-annotation</artifactId>
-            <version>${hirpc.annotation.version}</version>
+            <groupId>io.netty</groupId>
+            <artifactId>netty-all</artifactId>
+            <version>${netty.version}</version>
         </dependency>
         <dependency>
             <groupId>cn.hi.awesome</groupId>
-            <artifactId>hirpc-protocol</artifactId>
-            <version>${hirpc.protocol.version}</version>
+            <artifactId>hirpc-common</artifactId>
+            <version>${hirpc.common.version}</version>
         </dependency>
     </dependencies>
 

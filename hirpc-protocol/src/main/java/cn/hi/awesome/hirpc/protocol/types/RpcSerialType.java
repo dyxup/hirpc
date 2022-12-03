@@ -1,4 +1,4 @@
-package cn.hi.awesome.hirpc.common.protocol;
+package cn.hi.awesome.hirpc.protocol.types;
 
 public enum RpcSerialType {
     JSON((byte) 1);

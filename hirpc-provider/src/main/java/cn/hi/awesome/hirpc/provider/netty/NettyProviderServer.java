@@ -1,6 +1,8 @@
 package cn.hi.awesome.hirpc.provider.netty;
 
 import cn.hi.awesome.hirpc.common.exception.RpcIOException;
+import cn.hi.awesome.hirpc.protocol.codec.RpcProtocolDecoder;
+import cn.hi.awesome.hirpc.protocol.codec.RpcProtocolEncoder;
 import cn.hi.awesome.hirpc.provider.RpcServer;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -9,12 +11,10 @@ import io.netty.channel.ChannelOption;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.SocketChannel;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
-import io.netty.handler.codec.string.StringDecoder;
-import io.netty.handler.codec.string.StringEncoder;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-public class NettyRpcServer implements RpcServer {
+public class NettyProviderServer implements RpcServer {
 
     @Override
     public void startServer(String ip, int port) {
@@ -28,9 +28,9 @@ public class NettyRpcServer implements RpcServer {
                         @Override
                         protected void initChannel(SocketChannel socketChannel) throws Exception {
                             socketChannel.pipeline()
-                                    .addLast(new StringDecoder())
-                                    .addLast(new StringEncoder())
-                                    .addLast(NettyReceiveHandler.getInstance());
+                                    .addLast(new RpcProtocolDecoder())
+                                    .addLast(new RpcProtocolEncoder())
+                                    .addLast(NettyProviderHandler.getInstance());
                         }
                     })
                     .option(ChannelOption.SO_BACKLOG, 128)
@@ -39,7 +39,7 @@ public class NettyRpcServer implements RpcServer {
             log.info("NettyRpcServer: server started, {}:{}", ip, port);
             future.channel().closeFuture().sync();
         } catch (Exception e) {
-            throw new RpcIOException("NettyRpcServer: ", e);
+            throw new RpcIOException("NettyRpcServer startServer: ", e);
         }
     }
 

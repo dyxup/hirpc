@@ -1,4 +1,4 @@
-package cn.hi.awesome.hirpc.common.protocol.common;
+package cn.hi.awesome.hirpc.protocol.msg;
 
 public class RpcRequestMsg extends RpcReqRespBase {
     private static final long serialVersionUID = 1L;

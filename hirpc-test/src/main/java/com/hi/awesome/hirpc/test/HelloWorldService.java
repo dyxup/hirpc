@@ -1,4 +1,4 @@
-package com.hi.awesome.test;
+package com.hi.awesome.hirpc.test;
 
 public interface HelloWorldService {
     String sayHello(String name);

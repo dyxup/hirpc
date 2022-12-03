@@ -1,4 +1,4 @@
-package cn.hi.awesome.hirpc.common.protocol.common;
+package cn.hi.awesome.hirpc.protocol.msg;
 
 import java.io.Serializable;
 
@@ -11,11 +11,11 @@ public class RpcMsgHeader implements Serializable {
     /**
      * 2 识别魔数
      */
-    private short magicNumber = 0xab;
+    private short magicNumber = RpcMsgConstants.RPC_MSG_HEADER_MAGIC_NUM;
     /**
-     * 1 消息类型
+     * 2 消息类型
      */
-    private byte msgType;
+    private short msgType;
     /**
      * 1 status
      */
@@ -41,11 +41,11 @@ public class RpcMsgHeader implements Serializable {
         this.magicNumber = magicNumber;
     }
 
-    public byte getMsgType() {
+    public short getMsgType() {
         return msgType;
     }
 
-    public void setMsgType(byte msgType) {
+    public void setMsgType(short msgType) {
         this.msgType = msgType;
     }
 
