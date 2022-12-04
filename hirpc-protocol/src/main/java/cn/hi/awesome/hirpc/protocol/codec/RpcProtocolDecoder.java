@@ -61,13 +61,13 @@ public class RpcProtocolDecoder extends MessageToMessageDecoder<ByteBuf> {
 
         if(RpcMsgType.REQUEST.equals(msgTypeEnum)) {
             RpcRequestMsg requestMsg = serialization.deserialize(data);
-            RpcMsg<RpcRequestMsg> msg = new RpcMsg<>();
+            RpcProtocol<RpcRequestMsg> msg = new RpcProtocol<>();
             msg.setHeader(header);
             msg.setBody(requestMsg);
             list.add(msg);
         } else if(RpcMsgType.RESPONSE.equals(msgTypeEnum)) {
             RpcResponseMsg responseMsg = serialization.deserialize(data);
-            RpcMsg<RpcResponseMsg> msg = new RpcMsg<>();
+            RpcProtocol<RpcResponseMsg> msg = new RpcProtocol<>();
             msg.setHeader(header);
             msg.setBody(responseMsg);
             list.add(msg);

@@ -2,7 +2,7 @@ package cn.hi.awesome.hirpc.protocol.msg;
 
 import java.io.Serializable;
 
-public class RpcMsg<T> implements Serializable {
+public class RpcProtocol<T> implements Serializable {
     private static final long serialVersionUID = 1L;
     private RpcMsgHeader header;
     private T body;
