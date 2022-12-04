@@ -1,37 +1,36 @@
 package cn.hi.awesome.hirpc.provider;
 
-import cn.hi.awesome.hirpc.annotation.RpcProvider;
-import cn.hi.awesome.hirpc.common.exception.RpcInitException;
-import cn.hi.awesome.hirpc.meta.RpcKey;
-import cn.hi.awesome.hirpc.provider.register.RpcServerRegister;
+import cn.hi.awesome.hirpc.protocol.codec.RpcProtocolDecoder;
+import cn.hi.awesome.hirpc.protocol.codec.RpcProtocolEncoder;
+import cn.hi.awesome.hirpc.provider.instantiation.RpcProviderInstantiation;
+import cn.hi.awesome.hirpc.provider.instantiation.SpringRpcProviderInstantiation;
+import cn.hi.awesome.hirpc.provider.netty.NettyProviderHandler;
+import cn.hi.awesome.hirpc.provider.netty.NettyProviderServer;
+import cn.hi.awesome.hirpc.provider.register.RpcProviderRegister;
+import cn.hi.awesome.hirpc.provider.register.ZookeeperRpcProviderRegister;
 import cn.hi.awesome.hirpc.scan.ClassFileScanner;
 import cn.hi.awesome.hirpc.scan.JarClassScanner;
 import cn.hi.awesome.hirpc.scan.ProviderScanner;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
 /**
  * RpcServer入口类
  */
 public class RpcServerInit {
 
-    private final RpcServerConfig rpcServerConfig = RpcServerConfig.read();
+    private final RpcProviderServer rpcServer = new NettyProviderServer("127.0.0.1", 7766, NettyProviderHandler.getInstance(), new RpcProtocolDecoder(), new RpcProtocolEncoder());
 
-    private final RpcProviderServer rpcServer;
+    private final RpcProviderRegister rpcProviderRegister = new ZookeeperRpcProviderRegister();
 
-    private final RpcServerRegister rpcServerRegister;
+    private final RpcProviderInstantiation rpcProviderInstantiation = new SpringRpcProviderInstantiation();
 
-    public RpcServerInit(RpcProviderServer rpcServer, RpcServerRegister rpcServerRegister) {
-        this.rpcServer = rpcServer;
-        this.rpcServerRegister = rpcServerRegister;
-    }
+
 
     /** INIT RESULT **/
     private boolean init = false;
     private final List<String> providerClassNameList = new ArrayList<>();
-    private Map<RpcKey<RpcProvider>, Object> proxyMap;
 
     public void doInit() {
         try {
@@ -39,7 +38,7 @@ public class RpcServerInit {
             // TODO: start at another thread
             rpcServer.start();
             // TODO: register after start
-            rpcServerRegister.register();
+            rpcProviderRegister.register();
             // TODO: unregister when exception
 //            rpcServerRegister.unregister();
             init = true;
@@ -48,27 +47,23 @@ public class RpcServerInit {
         }
     }
 
-    public Object getHandler(String interfaceName, String version, String group) {
-        if(!init) {
-            throw new RpcInitException("RpcServerInit: must invoke <doInit> first");
-        }
-        return proxyMap.get(RpcKey.of(interfaceName, version, group));
-    }
-
     private void init() {
-        ClassFileScanner classFileScanner = new ClassFileScanner(rpcServerConfig.getScanPackage());
-        JarClassScanner jarClassScanner = new JarClassScanner(rpcServerConfig.getScanPackage());
+        ProviderServerConfig providerServerConfig = ProviderServerConfig.read();
+        // TODO: 根据配置实例化fields
+
+        ClassFileScanner classFileScanner = new ClassFileScanner(providerServerConfig.getScanPackage());
+        JarClassScanner jarClassScanner = new JarClassScanner(providerServerConfig.getScanPackage());
         providerClassNameList.addAll(classFileScanner.scan());
         providerClassNameList.addAll(jarClassScanner.scan());
 
         ProviderScanner providerScanner = new ProviderScanner(providerClassNameList);
-        proxyMap = providerScanner.scan();
+        // 扫描注解创建key
+        ProviderHolder.providerInstanceMap = providerScanner.scan();
 
-        // create real handler instance
-        proxyMap.entrySet().forEach(e -> {
-            // TODO: Instantiation
-//            e.setValue();
-//            new RpcServerInstanceInstantiation();
+        // 实例化创建value 即provider的实例
+        ProviderHolder.providerInstanceMap.entrySet().forEach(e -> {
+            Object instance = rpcProviderInstantiation.getProviderInstance(e.getKey().getInterfaceName());
+            e.setValue(instance);
         });
     }
 }

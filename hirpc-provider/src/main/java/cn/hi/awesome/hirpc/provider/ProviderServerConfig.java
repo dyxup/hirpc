@@ -1,13 +1,13 @@
 package cn.hi.awesome.hirpc.provider;
 
-public class RpcServerConfig {
+public class ProviderServerConfig {
 
     private String listenAddr;
     private String registryAddr;
     private int registryPort;
     private String scanPackage;
 
-    public RpcServerConfig(String listenAddr, String registryAddr, int registryPort, String scanPackage) {
+    public ProviderServerConfig(String listenAddr, String registryAddr, int registryPort, String scanPackage) {
         this.listenAddr = listenAddr;
         this.registryAddr = registryAddr;
         this.registryPort = registryPort;
@@ -46,9 +46,9 @@ public class RpcServerConfig {
         this.scanPackage = scanPackage;
     }
 
-    public static RpcServerConfig read() {
+    public static ProviderServerConfig read() {
         // TODO: read config from config file
-        return new RpcServerConfig(null, null, 0, null);
+        return new ProviderServerConfig(null, null, 0, null);
     }
 
 }
