@@ -14,7 +14,6 @@
         <module>hirpc-test</module>
         <module>hirpc-provider</module>
         <module>hirpc-consumer</module>
-        <module>hirpc-provider</module>
         <module>hirpc-protocol</module>
     </modules>
 
