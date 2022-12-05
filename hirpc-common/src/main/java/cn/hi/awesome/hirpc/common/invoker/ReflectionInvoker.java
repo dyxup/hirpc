@@ -9,10 +9,16 @@ import java.util.stream.Collectors;
 
 public class ReflectionInvoker implements Invoker {
     @Override
-    public <R> R invoke(String className, String methodName, Object instance, Object[] types, Object[] params) {
+    public <R> R invoke(String className, String methodName, Object instance, String[] types, Object[] params) {
         try {
             Class<?> clazz = Class.forName(className);
-            List<Class<?>> invokeMethodParamTypeClassList = Arrays.stream(types).map(Object::getClass).collect(Collectors.toList());
+            List<Class<?>> invokeMethodParamTypeClassList = Arrays.stream(types).map(s -> {
+                try {
+                    return Class.forName(s);
+                } catch (ClassNotFoundException e) {
+                    throw new RuntimeException(e);
+                }
+            }).collect(Collectors.toList());
             List<Method> methodToInvoke = Arrays.stream(clazz.getMethods())
                     .filter(x -> methodName.equals(x.getName()))
                     .filter(x -> {

@@ -9,4 +9,8 @@ public class ProviderHolder {
 
     public static Map<RpcKey<RpcProvider>, Object> providerInstanceMap;
 
+    public static Object getProviderInstance(String className, String version, String group) {
+        return providerInstanceMap.get(RpcKey.of(className, version, group));
+    }
+
 }
